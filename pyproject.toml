@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "concept-web-project"
+version = "0.1.0"
+description = "Concept-mapping package for use in social sciences instruction."
+authors = ["speters9 <speters9@stanford.edu>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false 
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+scikit-learn = "^1.4.2"
+numpy = "^1.26.4"
+python-dotenv = "^1.0.1"
+langchainhub = "^0.1.15"
+langchain = "^0.2.9"
+langchain-community = "^0.2.7"
+sentence-transformers = "^3.0.1"
+langchain-huggingface = "^0.0.3"
+langchain-openai = "^0.1.17"
+pypdf2 = "^3.0.1"
+python-docx = "^1.1.2"
+pytesseract = "^0.3.10"
+pdf2image = "^1.17.0"
+pillow = "^10.4.0"
+pymupdf = "^1.24.9"
+pyprojroot = "^0.3.0"
+spacy = "^3.7.6"
+contextualspellcheck = "^0.4.4"
+img2table = "^1.3.0"
+pre-commit = "^3.8.0"
+autopep8 = "2.0.4"
+wordcloud = "^1.9.3"
+pyvis = "^0.3.2"
+cookiecutter-data-science = "^2.0.0"
+
+
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
