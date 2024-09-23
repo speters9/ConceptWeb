@@ -5,7 +5,8 @@ description = "Concept-mapping package for use in social sciences instruction."
 authors = ["speters9 <speters9@stanford.edu>"]
 license = "MIT"
 readme = "README.md"
-package-mode = false 
+repository = "https://github.com/speters9/ConceptWeb.git"
+packages = [{ include = "src/concept_web" }]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
@@ -33,6 +34,7 @@ autopep8 = "2.0.4"
 wordcloud = "^1.9.3"
 pyvis = "^0.3.2"
 cookiecutter-data-science = "^2.0.0"
+jedi = "0.18.2"
 
 
 
