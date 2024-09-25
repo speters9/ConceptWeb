@@ -1,25 +1,23 @@
 """
-This script processes lesson readings and objectives to extract key concepts and their relationships for export to graph.
+This script processes lesson readings and objectives to extract key concepts and their relationships,
+which are then prepared for export to a graph or other forms of visualization.
 
-It generates a concept map, visualizes it as a graph, and also creates a word cloud of the concepts.
-The process involves:
-    summarizing text,
-    extracting relationships between concepts,
-    normalizing and processing these relationships, and
-    building and visualizing a graph.
-
-Workflow:
-1. **Summarize Text**: Summarizes the lesson readings based on provided objectives.
-2. **Extract Relationships**: Extracts key concepts and the relationships between them.
-3. **Normalize and Process**: Normalizes concepts and processes relationships to handle similar concepts.
-4. **Build Graph**: Constructs an undirected graph from the processed relationships.
-5. **Visualize Graph**: Visualizes the graph, adjusting node sizes based on centrality and edge thickness based on relationship frequency.
-6. **Generate Word Cloud**: Creates a word cloud of the concepts.
+The script performs the following steps:
+    1. **Summarize Text**: Summarizes the provided lesson readings using a specified prompt and language model.
+    2. **Extract Relationships**: Extracts key concepts and relationships between them from the summarized text,
+       guided by lesson objectives and prompts.
+    3. **Normalize and Process Relationships**: Normalizes concept names, consolidates similar concepts,
+       and processes the relationships to create a structured output.
+    4. **Process Output**: Processes the relationships to ensure consistency in concept naming and
+       prepares the data for further use (e.g., in graph creation).
 
 Dependencies:
-- Requires access to OpenAI API for generating summaries and extracting relationships.
-- Uses NetworkX and Matplotlib for graph construction and visualization.
-- WordCloud library is used for generating the word cloud.
+- **Language Model**: Requires a language model (such as OpenAI's GPT) for summarizing readings and extracting relationships.
+- **JSON**: Used for parsing and managing data extracted from the language model.
+- **Inflect**: Utilized for normalizing concept names, including singularizing nouns.
+- **Regex**: Applied for text processing and pattern matching in various normalization and extraction steps.
+
+This script is intended to serve as a modular component in a larger pipeline, where extracted relationships and concepts can be further analyzed, visualized, or exported for educational purposes.
 """
 
 # base libraries
@@ -69,7 +67,7 @@ def summarize_text(text: str, prompt: str, course_name: str, llm: Any, parser=St
 
 
 def extract_relationships(text: str, objectives: str, course_name: str,
-                          prompt: str, llm: Any, parser=StrOutputParser(),
+                          llm: Any, parser=StrOutputParser(),
                           verbose=False) -> List[Tuple[str, str, str]]:
     """
     Extract key concepts and their relationships from the provided text.

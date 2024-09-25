@@ -1,3 +1,61 @@
+"""
+This module provides functionality to load, process, and extract text from various document types (PDF, DOCX, and TXT)
+for the purpose of generating lesson-specific content. It supports operations such as extracting lesson objectives
+from syllabi, loading lesson readings from specified directories, and handling various document formats.
+
+Key Functions:
+1. **load_documents**:
+   - Loads all document files from a given directory, specifically targeting files that match the inferred lesson number.
+   - Supports PDF, DOCX, and TXT file formats.
+
+2. **load_lessons**:
+   - Loads lessons from one or multiple directories, with options for recursive directory search.
+   - Provides the ability to infer lesson numbers from either filenames or directory names.
+
+3. **infer_lesson_number**:
+   - Infers the lesson number from a directory or file path, based on either the filename or the directory name.
+
+4. **infer_lesson_from_filename**:
+   - Extracts the lesson number directly from a filename using regular expressions.
+
+5. **extract_text_from_pdf**:
+   - Extracts and returns the text content from a PDF file, handling paragraph breaks appropriately.
+
+6. **extract_lessons_from_page**:
+   - Extracts lesson content from a single page of syllabus content, identified by lesson markers.
+
+7. **find_pdf_lessons**:
+   - Locates lessons within a PDF syllabus based on the current lesson number and returns the relevant content.
+
+8. **find_docx_indices**:
+   - Finds indices for lessons in DOCX syllabi, helping to identify previous, current, and upcoming lessons.
+
+9. **load_docx_syllabus**:
+   - Loads the content of a DOCX syllabus and returns it as a list of paragraphs.
+
+10. **extract_lesson_objectives**:
+    - Extracts objectives for the specified lesson from either a PDF or DOCX syllabus,
+      supporting the retrieval of previous, current, and next lessons' objectives.
+
+11. **load_readings**:
+    - Loads text content from PDF, DOCX, or TXT files, prefixing the extracted text with the file's title.
+    - Handles potential issues such as unreadable or corrupted files.
+
+Usage:
+This module is primarily designed for applications where structured extraction of lesson materials and objectives
+is required, such as in educational content analysis or automated lesson planning systems.
+
+Dependencies:
+- **PyPDF2**: Used for extracting text from PDF files.
+- **python-docx**: Used for handling and extracting text from DOCX files.
+- **re**: Regular expressions are used extensively for parsing filenames and directory names to infer lesson numbers.
+- **time**: Used to implement retry logic for opening DOCX files.
+- **dotenv**: For environment variable management when running the module as a script.
+
+Example:
+The module can be executed as a standalone script to load lesson documents and extract lesson objectives from a specified syllabus.
+"""
+
 import re
 import time
 # initial prompt
@@ -66,7 +124,8 @@ def load_lessons(directories: Union[Path, List[Path]], lesson_range: range = Non
                     continue
                 sub_subdirectories = [p for p in subdirectory.glob('*/') if p.is_dir()]
                 if sub_subdirectories:
-                    logger.warning(f"Overly nested lesson directories found: {subdirectory} contains subdirectories. Readings in these directories not loaded")
+                    logger.warning(
+                        f"Overly nested lesson directories found: {subdirectory} contains subdirectories. Readings in these directories not loaded")
 
         else:
             inferred_lesson_number = infer_lesson_number(directory, infer_from)

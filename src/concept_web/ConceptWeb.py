@@ -135,8 +135,8 @@ class ConceptMapBuilder:
 
             for document in documents:
                 summary = summarize_text(document, prompt=summary_prompt, course_name=self.course_name, llm=self.llm)
-                relationships = extract_relationships(summary, lesson_objectives, self.course_name,
-                                                      prompt=relationship_prompt, llm=self.llm)
+                relationships = extract_relationships(summary, lesson_objectives,
+                                                      self.course_name, llm=self.llm)
 
                 self.relationship_list.extend(relationships)
                 concepts = extract_concepts_from_relationships(relationships)

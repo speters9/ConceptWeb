@@ -1,5 +1,38 @@
+
 from pathlib import Path
 from typing import List, Union
+
+"""
+This module provides functions to visualize a concept map generated from processed relationships between concepts.
+It includes functionalities to create interactive graph visualizations and generate word clouds representing the concepts.
+
+The primary functionalities include:
+1. **Interactive Graph Visualization**: Converts a NetworkX graph into an interactive HTML visualization using pyvis.
+   The graph can be manipulated dynamically in a web browser, allowing for physics simulations, node filtering, and clustering.
+2. **Word Cloud Generation**: Creates a word cloud image from a list of concepts, visually representing the frequency
+   of each concept.
+
+Main Functions:
+- `visualize_graph_interactive(G: nx.Graph, output_path: Union[Path, str]) -> None`:
+    Visualizes the given graph interactively using pyvis and saves the result as an HTML file. The nodes are colored
+    based on their community, and the visualization allows for interactive exploration of the graph.
+
+- `generate_wordcloud(concept_list: List[str], output_path: str = None) -> None`:
+    Generates a word cloud image from a list of concepts, optionally saving the result to a file. The word cloud
+    visually represents the frequency of concepts, with more frequent concepts displayed more prominently.
+
+Workflow:
+1. **Graph Conversion**: Converts the provided NetworkX graph into a pyvis graph, applying styles and attributes
+   like node size and edge width based on centrality and relationship frequency.
+2. **Interactive Visualization**: Saves the interactive graph as an HTML file, which can be explored in any web browser.
+3. **Word Cloud Creation**: Generates a word cloud image from the list of concepts and optionally saves it to disk.
+
+Dependencies:
+- NetworkX: For graph data structure and manipulation.
+- Matplotlib: For color mapping and displaying the word cloud.
+- Pyvis: For creating interactive graph visualizations in HTML.
+- WordCloud: For generating word cloud images.
+"""
 
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt

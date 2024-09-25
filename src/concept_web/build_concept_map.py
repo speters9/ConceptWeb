@@ -1,25 +1,33 @@
 """
-This script processes lesson readings and objectives to extract key concepts and their relationships for export to graph.
+This module provides functions for constructing and visualizing a concept map based on extracted relationships
+between concepts from lesson readings and objectives.
 
-It generates a concept map, visualizes it as a graph, and also creates a word cloud of the concepts.
-The process involves:
-    summarizing text,
-    extracting relationships between concepts,
-    normalizing and processing these relationships, and
-    building and visualizing a graph.
+The primary functionalities include:
+1. **Building a Graph**: Construct an undirected graph from the relationships, normalizing edge weights and node centrality.
+2. **Community Detection**: Detect communities within the graph using various clustering methods such as 'leiden', 'louvain', or 'spectral'.
+3. **Graph Visualization**: Prepare the graph for visualization, assigning attributes like node size and community labels.
+
+Main Functions:
+- `build_graph(relationships: List[Tuple[str, str, str]]) -> nx.Graph`:
+    Builds an undirected graph from processed relationships. Normalizes edge weights and node centrality,
+    with handling for cases where normalization isn't possible due to lack of variation.
+
+- `detect_communities(G: nx.Graph, method: str = "leiden", num_clusters: int = None) -> nx.Graph`:
+    Detects communities within the graph using the specified method ('leiden', 'louvain', or 'spectral').
+    Assigns community labels to nodes for use in visualizations.
 
 Workflow:
-1. **Summarize Text**: Summarizes the lesson readings based on provided objectives.
-2. **Extract Relationships**: Extracts key concepts and the relationships between them.
-3. **Normalize and Process**: Normalizes concepts and processes relationships to handle similar concepts.
-4. **Build Graph**: Constructs an undirected graph from the processed relationships.
-5. **Visualize Graph**: Visualizes the graph, adjusting node sizes based on centrality and edge thickness based on relationship frequency.
-6. **Generate Word Cloud**: Creates a word cloud of the concepts.
+1. **Process Relationships**: Takes the extracted relationships and processes them into a graph.
+2. **Normalize Attributes**: Normalizes edge weights and node centrality to ensure visual clarity.
+3. **Community Detection**: Identifies clusters or communities within the graph, which can help in understanding
+   how concepts are grouped.
+4. **Error Handling**: Provides fallback mechanisms for cases where normalization cannot be performed due to
+   insufficient data variation.
 
 Dependencies:
-- Requires access to OpenAI API for generating summaries and extracting relationships.
-- Uses NetworkX and Matplotlib for graph construction and visualization.
-- WordCloud library is used for generating the word cloud.
+- NetworkX: For graph construction and basic community detection.
+- CDlib: For advanced community detection algorithms like 'leiden'.
+- Scikit-learn: For spectral clustering, which is an alternative method for community detection.
 """
 
 import logging
@@ -44,16 +52,6 @@ load_dotenv()
 # Path definitions
 projectDir = Path(os.getenv('projectDir'))
 dataDir = projectDir / "data/"
-
-# %%
-
-# %%
-
-# ---------------------------------------------------------------
-
-# Clean relationships, build network
-
-# ---------------------------------------------------------------
 
 
 # %%

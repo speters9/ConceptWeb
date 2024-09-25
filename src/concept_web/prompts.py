@@ -1,3 +1,5 @@
+"""Prompts for llm summarizing and relationship extraction"""
+
 summary_prompt = """You are a professor specializing in {course_name}
                     You will be given a text and asked to summarize this text in light of your expertise.
                     Summarize the following text: \n {text}"""
