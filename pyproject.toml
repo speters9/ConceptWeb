@@ -35,6 +35,8 @@ wordcloud = "^1.9.3"
 pyvis = "^0.3.2"
 cookiecutter-data-science = "^2.0.0"
 jedi = "0.18.2"
+cdlib = "^0.4.0"
+leidenalg = "^0.10.2"
 
 
 
