@@ -62,7 +62,7 @@ class ConceptMapBuilder:
     """
 
     def __init__(self, project_dir: Union[str, Path], readings_dir: Union[str, Path], syllabus_path: Union[str, Path],
-                 llm, course_name: str, lesson_range: range = None, recursive: bool = False,
+                 llm, course_name: str, lesson_range: Union[range, int] = None, recursive: bool = False,
                  lesson_objectives: Union[List[str], Dict[str, str]] = None, verbose: bool = True, **kwargs):
         """
         Initializes the ConceptMapBuilder with paths and configurations.
@@ -79,11 +79,11 @@ class ConceptMapBuilder:
         self.syllabus_path = Path(syllabus_path)
         self.llm = llm
         self.course_name = course_name
-        self.lesson_range = lesson_range
+        self.lesson_range = range(lesson_range, lesson_range + 1) if isinstance(lesson_range, int) else lesson_range
         self.recursive = recursive
         self.readings_dir = readings_dir
         self.data_dir = self.project_dir / "data"
-        self.output_dir = self.data_dir / "ConceptWeb_output"
+        self.output_dir = self.project_dir / "reports/ConceptWebOutput"
         self.relationship_list = []
         self.concept_list = []
         self.prompts = {'summary': summary_prompt,
@@ -221,19 +221,21 @@ if __name__ == "__main__":
     import os
     from pathlib import Path
 
-    # env setup
     from dotenv import load_dotenv
+    # env setup
+    from pyprojroot.here import here
     load_dotenv()
 
     # llm chain setup
     from langchain_openai import ChatOpenAI
 
+    # from langchain_community.llms import Ollama
     # Path definitions
     readingDir = Path(os.getenv('readingsDir'))
     syllabus_path = Path(os.getenv('syllabus_path'))
     pdf_syllabus_path = Path(os.getenv('pdf_syllabus_path'))
 
-    projectDir = Path(os.getenv('projectDir'))
+    projectDir = here()
 
     # Example usage
     llm = ChatOpenAI(
@@ -245,6 +247,11 @@ if __name__ == "__main__":
         api_key=os.getenv('openai_key'),
         organization=os.getenv('openai_org'),
     )
+    # llm = Ollama(
+    #     model="llama3.1",
+    #     temperature=0,
+
+    #     )
 
     builder = ConceptMapBuilder(
         readings_dir=readingDir,
@@ -252,7 +259,7 @@ if __name__ == "__main__":
         syllabus_path=syllabus_path,
         llm=llm,
         course_name="American Politics",
-        lesson_range=range(1, 3),
+        lesson_range=range(17),
         recursive=True,
         verbose=True
     )

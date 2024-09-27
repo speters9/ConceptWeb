@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+
+
+
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+
+
+
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+
+
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+
+
+            <div id="config"></div>
+
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+
+
+
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"centrality": 0.05555555555555555, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 9.6}, "id": "congressional_power", "label": "congressional_power", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.07407407407407407, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 11.4}, "id": "legislative_gridlock", "label": "legislative_gridlock", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.12962962962962962, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 16.8}, "id": "representation", "label": "representation", "shape": "dot", "size": 16.8, "text_size": 16.8}, {"centrality": 0.037037037037037035, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 7.8}, "id": "institutional_evolution", "label": "institutional_evolution", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.05555555555555555, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 9.6}, "id": "partisan_division", "label": "partisan_division", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.09259259259259259, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 13.2}, "id": "committee_system", "label": "committee_system", "shape": "dot", "size": 13.2, "text_size": 13.2}, {"centrality": 0.1111111111111111, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 15.0}, "id": "bicameral_structure", "label": "bicameral_structure", "shape": "dot", "size": 15.0, "text_size": 15.0}, {"centrality": 0.07407407407407407, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 11.4}, "id": "electoral_dynamic", "label": "electoral_dynamic", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.2037037037037037, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 24.0}, "id": "legislative_power", "label": "legislative_power", "shape": "dot", "size": 24.0, "text_size": 24.0}, {"centrality": 0.037037037037037035, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 7.8}, "id": "oversight_power", "label": "oversight_power", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.16666666666666666, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 20.4}, "id": "presidential_power", "label": "presidential_power", "shape": "dot", "size": 20.4, "text_size": 20.4}, {"centrality": 0.07407407407407407, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 11.4}, "id": "gridlock", "label": "gridlock", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.1111111111111111, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 15.0}, "id": "check_and_balance", "label": "check_and_balance", "shape": "dot", "size": 15.0, "text_size": 15.0}, {"centrality": 0.018518518518518517, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 6.0}, "id": "amendment_proce", "label": "amendment_proce", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.05555555555555555, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 9.6}, "id": "organizational_structure_of_congre", "label": "organizational_structure_of_congre", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.018518518518518517, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 6.0}, "id": "individual_member_autonomy", "label": "individual_member_autonomy", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.018518518518518517, "color": "#98df8a", "community": 5, "font": {"color": "white", "size": 6.0}, "id": "caucu", "label": "caucu", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.037037037037037035, "color": "#98df8a", "community": 5, "font": {"color": "white", "size": 7.8}, "id": "constituent", "label": "constituent", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.07407407407407407, "color": "#98df8a", "community": 5, "font": {"color": "white", "size": 11.4}, "id": "presidential_authority", "label": "presidential_authority", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.07407407407407407, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 11.4}, "id": "partisan_polarization", "label": "partisan_polarization", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.05555555555555555, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 9.6}, "id": "electoral_consideration", "label": "electoral_consideration", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.05555555555555555, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 9.6}, "id": "policy_implementation", "label": "policy_implementation", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.09259259259259259, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 13.2}, "id": "partisanship", "label": "partisanship", "shape": "dot", "size": 13.2, "text_size": 13.2}, {"centrality": 0.07407407407407407, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 11.4}, "id": "majority_control", "label": "majority_control", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.07407407407407407, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 11.4}, "id": "electoral_incentive", "label": "electoral_incentive", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.07407407407407407, "color": "#2ca02c", "community": 4, "font": {"color": "white", "size": 11.4}, "id": "house_and_senate_difference", "label": "house_and_senate_difference", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.037037037037037035, "color": "#2ca02c", "community": 4, "font": {"color": "white", "size": 7.8}, "id": "party_leadership", "label": "party_leadership", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#2ca02c", "community": 4, "font": {"color": "white", "size": 7.8}, "id": "majoritarianism", "label": "majoritarianism", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#2ca02c", "community": 4, "font": {"color": "white", "size": 7.8}, "id": "supermajority_voting", "label": "supermajority_voting", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#2ca02c", "community": 4, "font": {"color": "white", "size": 7.8}, "id": "governance_challenge", "label": "governance_challenge", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.018518518518518517, "color": "#1f77b4", "community": 0, "font": {"color": "white", "size": 6.0}, "id": "incumbency_advantage", "label": "incumbency_advantage", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.037037037037037035, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 7.8}, "id": "messaging", "label": "messaging", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.07407407407407407, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 11.4}, "id": "congressional_strategy", "label": "congressional_strategy", "shape": "dot", "size": 11.4, "text_size": 11.4}, {"centrality": 0.037037037037037035, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 7.8}, "id": "institutional_context", "label": "institutional_context", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 7.8}, "id": "public_support", "label": "public_support", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#ffbb78", "community": 3, "font": {"color": "white", "size": 7.8}, "id": "historical_context", "label": "historical_context", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.018518518518518517, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 6.0}, "id": "executive_order", "label": "executive_order", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.018518518518518517, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 6.0}, "id": "constitutional_power", "label": "constitutional_power", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.037037037037037035, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 7.8}, "id": "communication_with_congre", "label": "communication_with_congre", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 7.8}, "id": "impeachment", "label": "impeachment", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#ff7f0e", "community": 2, "font": {"color": "white", "size": 7.8}, "id": "resource_and_tool_of_governance", "label": "resource_and_tool_of_governance", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.05555555555555555, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 9.6}, "id": "separation_of_power", "label": "separation_of_power", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.1111111111111111, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 15.0}, "id": "judicial_review", "label": "judicial_review", "shape": "dot", "size": 15.0, "text_size": 15.0}, {"centrality": 0.018518518518518517, "color": "#98df8a", "community": 5, "font": {"color": "white", "size": 6.0}, "id": "eligibility_requirement", "label": "eligibility_requirement", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.018518518518518517, "color": "#98df8a", "community": 5, "font": {"color": "white", "size": 6.0}, "id": "evolution_of_presidential_power", "label": "evolution_of_presidential_power", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.037037037037037035, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 7.8}, "id": "federalism", "label": "federalism", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 7.8}, "id": "constitutional_supremacy", "label": "constitutional_supremacy", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 7.8}, "id": "judicial_independence", "label": "judicial_independence", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.05555555555555555, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 9.6}, "id": "judicial_activism", "label": "judicial_activism", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.05555555555555555, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 9.6}, "id": "judicial_restraint", "label": "judicial_restraint", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.037037037037037035, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 7.8}, "id": "right_of_citizen", "label": "right_of_citizen", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.037037037037037035, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 7.8}, "id": "supreme_court_decision-making", "label": "supreme_court_decision-making", "shape": "dot", "size": 7.8, "text_size": 7.8}, {"centrality": 0.018518518518518517, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 6.0}, "id": "impact_of_appointment", "label": "impact_of_appointment", "shape": "dot", "size": 6.0, "text_size": 6.0}, {"centrality": 0.05555555555555555, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 9.6}, "id": "role_of_the_court_in_society", "label": "role_of_the_court_in_society", "shape": "dot", "size": 9.6, "text_size": 9.6}, {"centrality": 0.018518518518518517, "color": "#aec7e8", "community": 1, "font": {"color": "white", "size": 6.0}, "id": "type_of_law_and_case", "label": "type_of_law_and_case", "shape": "dot", "size": 6.0, "text_size": 6.0}]);
+                  edges = new vis.DataSet([{"from": "congressional_power", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "legislative_gridlock", "width": 0.5}, {"from": "congressional_power", "normalized_weight": 0.5, "relation": ["enable"], "title": "enable", "to": "representation", "width": 0.5}, {"from": "congressional_power", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "institutional_evolution", "width": 0.5}, {"from": "legislative_gridlock", "normalized_weight": 0.5, "relation": ["complicate"], "title": "complicate", "to": "representation", "width": 0.5}, {"from": "legislative_gridlock", "normalized_weight": 0.5, "relation": ["contribute_to"], "title": "contribute_to", "to": "partisan_division", "width": 0.5}, {"from": "legislative_gridlock", "normalized_weight": 0.5, "relation": ["facilitate"], "title": "facilitate", "to": "committee_system", "width": 0.5}, {"from": "representation", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "bicameral_structure", "width": 0.5}, {"from": "representation", "normalized_weight": 0.5, "relation": ["shape"], "title": "shape", "to": "electoral_dynamic", "width": 0.5}, {"from": "representation", "normalized_weight": 0.5, "relation": ["require"], "title": "require", "to": "legislative_power", "width": 0.5}, {"from": "representation", "normalized_weight": 0.5, "relation": ["is_balanced_with"], "title": "is_balanced_with", "to": "oversight_power", "width": 0.5}, {"from": "representation", "normalized_weight": 0.5, "relation": ["raise_concern_about"], "title": "raise_concern_about", "to": "presidential_power", "width": 0.5}, {"from": "bicameral_structure", "normalized_weight": 0.5, "relation": ["create"], "title": "create", "to": "partisan_division", "width": 0.5}, {"from": "bicameral_structure", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "institutional_evolution", "width": 0.5}, {"from": "bicameral_structure", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "legislative_power", "width": 0.5}, {"from": "bicameral_structure", "normalized_weight": 0.5, "relation": ["create"], "title": "create", "to": "committee_system", "width": 0.5}, {"from": "bicameral_structure", "normalized_weight": 0.5, "relation": ["contribute_to"], "title": "contribute_to", "to": "gridlock", "width": 0.5}, {"from": "partisan_division", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "electoral_dynamic", "width": 0.5}, {"from": "electoral_dynamic", "normalized_weight": 0.5, "relation": ["maintain"], "title": "maintain", "to": "check_and_balance", "width": 0.5}, {"from": "electoral_dynamic", "normalized_weight": 0.5, "relation": ["reflect"], "title": "reflect", "to": "amendment_proce", "width": 0.5}, {"from": "committee_system", "normalized_weight": 0.5, "relation": ["include"], "title": "include", "to": "organizational_structure_of_congre", "width": 0.5}, {"from": "committee_system", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "individual_member_autonomy", "width": 0.5}, {"from": "committee_system", "normalized_weight": 4.0, "relation": ["facilitate", "utilize"], "title": "facilitate, utilize", "to": "legislative_power", "width": 4.0}, {"from": "caucu", "normalized_weight": 0.5, "relation": ["represent"], "title": "represent", "to": "constituent", "width": 0.5}, {"from": "constituent", "normalized_weight": 4.0, "relation": ["related_to"], "title": "related_to", "to": "presidential_authority", "width": 4.0}, {"from": "legislative_power", "normalized_weight": 4.0, "relation": ["evolf_through", "influence"], "title": "evolf_through, influence", "to": "organizational_structure_of_congre", "width": 4.0}, {"from": "legislative_power", "normalized_weight": 4.0, "relation": ["affected_by", "affect"], "title": "affected_by, affect", "to": "partisan_polarization", "width": 4.0}, {"from": "legislative_power", "normalized_weight": 0.5, "relation": ["impacted_by"], "title": "impacted_by", "to": "electoral_consideration", "width": 0.5}, {"from": "legislative_power", "normalized_weight": 0.5, "relation": ["can_lead_to"], "title": "can_lead_to", "to": "gridlock", "width": 0.5}, {"from": "legislative_power", "normalized_weight": 0.5, "relation": ["require"], "title": "require", "to": "policy_implementation", "width": 0.5}, {"from": "legislative_power", "normalized_weight": 4.0, "relation": ["require", "influence"], "title": "require, influence", "to": "partisanship", "width": 4.0}, {"from": "legislative_power", "normalized_weight": 0.5, "relation": ["affected_by"], "title": "affected_by", "to": "majority_control", "width": 0.5}, {"from": "legislative_power", "normalized_weight": 0.5, "relation": ["impact"], "title": "impact", "to": "electoral_incentive", "width": 0.5}, {"from": "organizational_structure_of_congre", "normalized_weight": 0.5, "relation": ["include"], "title": "include", "to": "house_and_senate_difference", "width": 0.5}, {"from": "house_and_senate_difference", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "party_leadership", "width": 0.5}, {"from": "house_and_senate_difference", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "majoritarianism", "width": 0.5}, {"from": "house_and_senate_difference", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "supermajority_voting", "width": 0.5}, {"from": "party_leadership", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "majoritarianism", "width": 0.5}, {"from": "supermajority_voting", "normalized_weight": 0.5, "relation": ["complicate"], "title": "complicate", "to": "governance_challenge", "width": 0.5}, {"from": "governance_challenge", "normalized_weight": 0.5, "relation": ["exacerbate"], "title": "exacerbate", "to": "partisan_polarization", "width": 0.5}, {"from": "partisan_polarization", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "electoral_consideration", "width": 0.5}, {"from": "partisan_polarization", "normalized_weight": 0.5, "relation": ["result_from"], "title": "result_from", "to": "gridlock", "width": 0.5}, {"from": "electoral_consideration", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "incumbency_advantage", "width": 0.5}, {"from": "gridlock", "normalized_weight": 0.5, "relation": ["is_a_challenge_for"], "title": "is_a_challenge_for", "to": "policy_implementation", "width": 0.5}, {"from": "policy_implementation", "normalized_weight": 0.5, "relation": ["ensure"], "title": "ensure", "to": "oversight_power", "width": 0.5}, {"from": "partisanship", "normalized_weight": 4.0, "relation": ["disrupt", "drive"], "title": "disrupt, drive", "to": "messaging", "width": 4.0}, {"from": "partisanship", "normalized_weight": 0.5, "relation": ["complicate"], "title": "complicate", "to": "partisanship", "width": 0.5}, {"from": "partisanship", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "electoral_incentive", "width": 0.5}, {"from": "majority_control", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "congressional_strategy", "width": 0.5}, {"from": "majority_control", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "electoral_incentive", "width": 0.5}, {"from": "majority_control", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "institutional_context", "width": 0.5}, {"from": "messaging", "normalized_weight": 0.5, "relation": ["motivate"], "title": "motivate", "to": "electoral_incentive", "width": 0.5}, {"from": "congressional_strategy", "normalized_weight": 0.5, "relation": ["shape"], "title": "shape", "to": "institutional_context", "width": 0.5}, {"from": "congressional_strategy", "normalized_weight": 0.5, "relation": ["affect"], "title": "affect", "to": "public_support", "width": 0.5}, {"from": "congressional_strategy", "normalized_weight": 0.5, "relation": ["is_shaped_by"], "title": "is_shaped_by", "to": "historical_context", "width": 0.5}, {"from": "presidential_power", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "executive_order", "width": 0.5}, {"from": "presidential_power", "normalized_weight": 0.5, "relation": ["is_categorized_by"], "title": "is_categorized_by", "to": "constitutional_power", "width": 0.5}, {"from": "presidential_power", "normalized_weight": 4.0, "relation": ["limit", "is_checked_by"], "title": "limit, is_checked_by", "to": "check_and_balance", "width": 4.0}, {"from": "presidential_power", "normalized_weight": 0.5, "relation": ["provide_background_for"], "title": "provide_background_for", "to": "historical_context", "width": 0.5}, {"from": "presidential_power", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "presidential_authority", "width": 0.5}, {"from": "presidential_power", "normalized_weight": 0.5, "relation": ["enable"], "title": "enable", "to": "communication_with_congre", "width": 0.5}, {"from": "presidential_power", "normalized_weight": 0.5, "relation": ["enable"], "title": "enable", "to": "impeachment", "width": 0.5}, {"from": "presidential_power", "normalized_weight": 0.5, "relation": ["enhance"], "title": "enhance", "to": "resource_and_tool_of_governance", "width": 0.5}, {"from": "check_and_balance", "normalized_weight": 0.5, "relation": ["is_influenced_by"], "title": "is_influenced_by", "to": "public_support", "width": 0.5}, {"from": "check_and_balance", "normalized_weight": 0.5, "relation": ["related_to"], "title": "related_to", "to": "impeachment", "width": 0.5}, {"from": "check_and_balance", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "separation_of_power", "width": 0.5}, {"from": "check_and_balance", "normalized_weight": 0.5, "relation": ["ensure"], "title": "ensure", "to": "judicial_review", "width": 0.5}, {"from": "presidential_authority", "normalized_weight": 0.5, "relation": ["related_to"], "title": "related_to", "to": "eligibility_requirement", "width": 0.5}, {"from": "presidential_authority", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "evolution_of_presidential_power", "width": 0.5}, {"from": "communication_with_congre", "normalized_weight": 0.5, "relation": ["related_to"], "title": "related_to", "to": "resource_and_tool_of_governance", "width": 0.5}, {"from": "separation_of_power", "normalized_weight": 0.5, "relation": ["support"], "title": "support", "to": "judicial_review", "width": 0.5}, {"from": "separation_of_power", "normalized_weight": 0.5, "relation": ["is_affected_by"], "title": "is_affected_by", "to": "federalism", "width": 0.5}, {"from": "judicial_review", "normalized_weight": 0.5, "relation": ["affirm"], "title": "affirm", "to": "constitutional_supremacy", "width": 0.5}, {"from": "judicial_review", "normalized_weight": 0.5, "relation": ["support"], "title": "support", "to": "judicial_independence", "width": 0.5}, {"from": "judicial_review", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "judicial_activism", "width": 0.5}, {"from": "judicial_review", "normalized_weight": 0.5, "relation": ["influence"], "title": "influence", "to": "judicial_restraint", "width": 0.5}, {"from": "constitutional_supremacy", "normalized_weight": 0.5, "relation": ["protect"], "title": "protect", "to": "right_of_citizen", "width": 0.5}, {"from": "right_of_citizen", "normalized_weight": 0.5, "relation": ["interact_with"], "title": "interact_with", "to": "federalism", "width": 0.5}, {"from": "judicial_independence", "normalized_weight": 0.5, "relation": ["enable"], "title": "enable", "to": "supreme_court_decision-making", "width": 0.5}, {"from": "supreme_court_decision-making", "normalized_weight": 4.0, "relation": ["affected_by", "affect"], "title": "affected_by, affect", "to": "impact_of_appointment", "width": 4.0}, {"from": "judicial_activism", "normalized_weight": 0.5, "relation": ["contrast_with"], "title": "contrast_with", "to": "judicial_restraint", "width": 0.5}, {"from": "judicial_activism", "normalized_weight": 0.5, "relation": ["can_lead_to"], "title": "can_lead_to", "to": "role_of_the_court_in_society", "width": 0.5}, {"from": "judicial_restraint", "normalized_weight": 0.5, "relation": ["can_limit"], "title": "can_limit", "to": "role_of_the_court_in_society", "width": 0.5}, {"from": "role_of_the_court_in_society", "normalized_weight": 0.5, "relation": ["is_shaped_by"], "title": "is_shaped_by", "to": "type_of_law_and_case", "width": 0.5}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "layout"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+
+
+
+
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+
+
+                  network = new vis.Network(container, data, options);
+
+
+
+
+
+
+
+
+
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

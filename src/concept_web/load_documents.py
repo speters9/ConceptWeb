@@ -92,7 +92,7 @@ def load_documents(directory: Path, lesson_number) -> List[str]:
     return all_documents
 
 
-def load_lessons(directories: Union[Path, List[Path]], lesson_range: range = None, recursive: bool = False, infer_from: str = "filename") -> List[str]:
+def load_lessons(directories: Union[Path, List[Path]], lesson_range: Union[range, int] = None, recursive: bool = False, infer_from: str = "filename") -> List[str]:
     """
     Load specific lessons from one or multiple directories, with options to infer lesson numbers from filenames or directory names.
 
@@ -108,6 +108,10 @@ def load_lessons(directories: Union[Path, List[Path]], lesson_range: range = Non
     logger = logger_setup(log_level='WARNING')
     if isinstance(directories, (str, Path)):
         directories = [Path(directories)]
+
+    # If an integer is provided, convert it to a range of a single lesson
+    if isinstance(lesson_range, int):
+        lesson_range = range(lesson_range, lesson_range + 1)
 
     all_documents = []
 

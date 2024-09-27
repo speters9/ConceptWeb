@@ -290,7 +290,6 @@ if __name__ == "__main__":
             relationships = extract_relationships(summary,
                                                   lsn_objectives,
                                                   course_name="American government",
-                                                  prompt=relationship_prompt,
                                                   llm=llm,
                                                   verbose=True)
             relationship_list.extend(relationships)
