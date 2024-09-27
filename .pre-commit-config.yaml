@@ -23,4 +23,4 @@ repos:
     args: ["--max-line-length=150", "--in-place"]
     language: python
     types: [python]
-    always_run: true
+    exclude: '.*\.png$'

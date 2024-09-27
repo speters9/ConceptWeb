@@ -18,7 +18,7 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
 - **Lesson Objective Extraction:** Automatically extracts objectives from provided syllabus documents or accepts user-provided objectives.
     - **Note:** Document loading and lesson objective extraction require clear naming conventions (e.g., directories organized by lesson for document upload, or document naming that suggests its lesson association, like 'Lesson 2 ReadingName'). Within syllabi, lessons associated with the identifier "Lesson" or "Week" will be extracted.
 - **Text Summarization:** Uses a language model to summarize lesson readings.
-    - **Note:** Example code relies on `langchain_openai.ChatOpenAI`. Currently working on non-API options such as Ollama (`langchain_community.llms.Ollama`), but they are not supported yet. 
+    - **Note:** Example code relies on `langchain_openai.ChatOpenAI`. Currently working on non-API options such as Ollama (`langchain_community.llms.Ollama`), but they are not supported yet.
 - **Concept Relationship Extraction:** Identifies and processes relationships between key concepts in the summary of the text, using lesson objectives as a guide. Processing steps involve a naive form of entity resolution based on Jaccard similarity.
 - **Graph Building:** Constructs an undirected graph from the processed relationships.
 - **Community Detection:** Identifies clusters within the graph using algorithms like Leiden, Louvain, or Spectral clustering.
@@ -41,7 +41,7 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
 │                         the creator's initials, and a short `-` delimited description, e.g.
 │                         `1.0-jqp-initial-data-exploration`.
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
+├── pyproject.toml     <- Project configuration file with package metadata for
 │                         concept_web and configuration for tools like black
 │
 ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
@@ -128,7 +128,3 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
 ## Acknowledgements
   - The project uses the LangChain library for language model integration.
   - Special thanks to the open-source community.
-
-
-
-
