@@ -18,7 +18,7 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
 - **Lesson Objective Extraction:** Automatically extracts objectives from provided syllabus documents or accepts user-provided objectives.
     - **Note:** Document loading and lesson objective extraction require clear naming conventions (e.g., directories organized by lesson for document upload, or document naming that suggests its lesson association, like 'Lesson 2 ReadingName'). Within syllabi, lessons associated with the identifier "Lesson" or "Week" will be extracted.
 - **Text Summarization:** Uses a language model to summarize lesson readings.
-    - **Note:** Example code relies on `langchain_openai.ChatOpenAI` but non-API options such as Ollama should work as well (`langchain_community.llms.Ollama`). Ensure Ollama is up and running first by calling `ollama run llama3` (or whatever version of LLaMA you choose).    
+    - **Note:** Example code relies on `langchain_openai.ChatOpenAI`. Currently working on non-API options such as Ollama (`langchain_community.llms.Ollama`), but they are not supported yet. 
 - **Concept Relationship Extraction:** Identifies and processes relationships between key concepts in the summary of the text, using lesson objectives as a guide. Processing steps involve a naive form of entity resolution based on Jaccard similarity.
 - **Graph Building:** Constructs an undirected graph from the processed relationships.
 - **Community Detection:** Identifies clusters within the graph using algorithms like Leiden, Louvain, or Spectral clustering.
@@ -101,12 +101,6 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
       api_key=os.getenv('OPENAI_KEY'),
       organization=os.getenv('OPENAI_ORG'),
   )
-  
-  ## if using ollama ##
-  from langchain_community.llms import Ollama
-  llm = Ollama(model="llama3.1",
-             temperature=0
-             )
 
   builder = ConceptMapBuilder(
       readings_dir=Path(os.getenv('readingsDir')),
@@ -129,7 +123,7 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
   1. Ensure that your lesson readings are stored in the specified readingsDir with the appropriate file extensions (.pdf, .docx, .txt).
   2. Set the lesson range and course name according to your syllabus.
   3. Run the pipeline to generate an interactive HTML graph and word cloud of the extracted concepts.
-  4. Concept graph will save in a the root folder under ```reports/```
+  4. Concept graph (as well as wordcloud and associated json of concepts and relationships) will save in a the root folder under ```reports/```
 
 ## Acknowledgements
   - The project uses the LangChain library for language model integration.
