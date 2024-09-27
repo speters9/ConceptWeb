@@ -10,7 +10,9 @@ Concept-mapping package for use in social sciences instruction.
 
 The Concept Map Builder is a Python-based tool designed to generate concept maps from lesson readings and objectives using a language model (LLM). This tool provides an end-to-end workflow that includes loading documents and lesson objectives, summarizing text, extracting relationships, building graphs, detecting communities, and creating both interactive visualizations and word clouds. It is particularly useful for educators and researchers looking to visually represent the relationships between key concepts in course materials.
 
-[Click here to view an example interactive concept map](reports/ConceptWebOutput/interactive_concept_map.html)
+![Concept Map Preview](assets/images/static_example.png)
+
+[Download and view the interactive concept map version here](https://your-username.github.io/your-repo-name/)
 
 ## Features
 
