@@ -12,7 +12,7 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
 
 ![Concept Map Preview](reports/ConceptWebOutput/static_example.jpeg)
 
-[Download and view the interactive concept map version here](https://your-username.github.io/your-repo-name/)
+[Download and view the interactive concept map version here](reports/ConceptWebOutput/)
 
 ## Features
 
