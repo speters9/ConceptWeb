@@ -12,8 +12,6 @@ The Concept Map Builder is a Python-based tool designed to generate concept maps
 
 ![Concept Map Preview](reports/ConceptWebOutput/static_example.jpeg)
 
-[Download and view the interactive concept map version here](reports/ConceptWebOutput/)
-
 ## Features
 
 - **Document Loading:** Supports `.docx`, `.pdf`, and `.txt` file formats for reading lesson materials.
