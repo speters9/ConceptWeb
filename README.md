@@ -1,3 +1,14 @@
+# ⚠️ Repository Archived and Merged
+
+This project has been **archived** and merged into the [ClassFactory repository](https://github.com/speters9/ClassFactory). 
+
+`ClassFactory` is a unified module that integrates a collection of AI-enabled teaching tools, including:
+- **BeamerBot**: Automated LaTeX Beamer slide generation
+- **ConceptWeb**: Concept map generation for student review
+- **QuizMaker**: Quiz creation, hosting, and analysis
+
+For continued updates and new developments, please visit the [ClassFactory repository](https://github.com/speters9/ClassFactory).
+
 # ConceptWeb
 
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
